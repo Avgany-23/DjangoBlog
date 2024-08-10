@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: helvetica, sans-serif;
+    background: linear-gradient(to right, rgb(221, 221, 223), transparent);
+}
+
+a {
+    color: #00abff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1f6e95;
+}
+
+h1 {
+    font-weight: normal;
+    border-bottom: 1.5px solid #706565;
+    padding: 0 0 10px 0;
+}
+
+h2 {
+    font-weight: normal;
+    margin: 30px 0 0;
+}
+
+#content {
+    float: left;
+    width: 60%;
+    padding: 0 0 0 30px;
+}
+
+#sidebar {
+    float: right;
+    width: 30%;
+    padding: 10px;
+    background: #c3bdbd;
+    border-radius: 3px;
+    height: 100%;
+}
+
+p.date {
+    color: #755d5d;
+    font-family: georgia, serif;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* pagination */
+.pagination {
+    margin: 40px 0;
+    font-weight: bold;
+    border: 1px solid black; /* Граница строки */
+    text-align:center;
+    width: 180px;
+    line-height: 30px; /* Высоту строки */
+}
+
+/* forms */
+input[type=submit] {
+    font-weight: bold;
+    background: #032332;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+input[type=submit]:hover {
+    color: #cf2e2e;
+    font-weight: 500;
+}
+
+.errorlist {
+    color: #cc0033;
+    float: left;
+    clear: both;
+    padding-left: 10px;
+}
+
+/* comments */
+.comment {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.comment:nth-child(2n) {
+    background: #d4cfcf;
+}
+.comment:nth-child(2n + 1) {
+    background: #cec7c7;
+}
+
+.comment .info {
+    font-weight: 800;
+    font-size: 10px;
+    color: #666;
+}
+
+/* формы заполнения */
+form>p>label {
+    color: #b04560;
+    vertical-align: top;
+    font-weight: 600;
+}
