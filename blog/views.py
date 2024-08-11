@@ -2,12 +2,12 @@ from django.db.models import Count
 from .models import Post
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import ListView
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
+from django.contrib.postgres.search import TrigramSimilarity, TrigramWordSimilarity
 
 
 @require_POST
@@ -82,28 +82,6 @@ def post_share(request, post_id: int) -> render:
                                                                          'post': post})
 
 
-# class MyPaginator(Paginator):
-#     def validate_number(self, number):
-#         try:
-#             return super().validate_number(number)
-#         except EmptyPage:
-#             if int(number) > 1:
-#                 return self.num_pages
-#             elif int(number) < 1:
-#                 return 1
-#             else:
-#                 raise
-
-
-# class PostListView(ListView):
-#     """Альтернативное представление списка постов"""
-#     queryset = Post.published.all()
-#     context_object_name = 'posts'
-#     paginate_by = 3
-#     template_name = 'blog/post/list.html'
-#     paginator_class = MyPaginator
-
-
 def post_list(request, tag_slug: str | None = None) -> render:
     """Функция отображает список опубликованных постов.
     Если tag_slug is not None, то отображается список постов с тегом = tag_slug"""
@@ -128,3 +106,27 @@ def post_list(request, tag_slug: str | None = None) -> render:
                   'blog/post/list.html',
                   {'posts': posts,
                    'tag': tag})
+
+
+def post_search(request):
+    """Функция для показа формы поиска и
+    отображения найденных по поиску статей"""
+
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            A = 1.0
+            B = 0.4
+            results = Post.published.annotate(
+                similarity=(A / (A + B) * TrigramSimilarity('title', query)
+                            + B / (A + B) * TrigramWordSimilarity(query, 'body'))
+            ).filter(similarity__gte=0.1).order_by('-similarity')
+
+    return render(request, 'blog/post/search.html', {'form': form,
+                                                                          'query': query,
+                                                                          'results': results})

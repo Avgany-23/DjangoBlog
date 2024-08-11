@@ -13,12 +13,29 @@
     </div>
 
         <div id="sidebar">
-            <h2>My blog</h2>
+
+            <a href="{% url 'blog:post_list' %}">
+                <h2>My blog</h2>
+            </a>
             <p>
                 This is my blog.<br>
                 I've written {% total_posts %} posts so far.<br>
                 Non published posts {% none_nublished_post %}
             </p>
+
+            <hr>
+                {% if user.is_authenticated %}
+                    Hi {{ user.username }}!
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden"/>
+                        <a href="#" onclick="parentNode.submit();">Log Out</a>
+                    </form>
+                {% else %}
+                    <p>You are not logged in</p>
+                    <a href="{% url 'login' %}">Log In</a>
+                {% endif %}
+            <hr>
 
             <h3>
                 The latest posts
