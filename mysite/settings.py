@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from secret_info import *
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -146,8 +149,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-EMAIL_HOST_USER = EMAIL_HOST_USER_
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD_
+EMAIL_HOST_USER = str(os.getenv('EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
@@ -177,9 +180,9 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # OAuth 2.0. для GitHub
-SOCIAL_AUTH_GITHUB_KEY = SOCIAL_AUTH_GITHUB_KEY_
-SOCIAL_AUTH_GITHUB_SECRET = SOCIAL_AUTH_GITHUB_SECRET_
+SOCIAL_AUTH_GITHUB_KEY = str(os.getenv('GITHUB_KEY'))
+SOCIAL_AUTH_GITHUB_SECRET = str(os.getenv('GITHUB_SECRET'))
 
 # OAuth 2.0. для Google
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SOCIAL_AUTH_GOOGLE_OAUTH2_KEY_
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET_
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = str(os.getenv('GOOGLE_KEY'))
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv('GOOGLE_SECRET'))

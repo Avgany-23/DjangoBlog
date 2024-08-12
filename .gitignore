@@ -6,3 +6,4 @@ secret_info.py
 # other
 mysite_data.json
 tests1.py
+.env
