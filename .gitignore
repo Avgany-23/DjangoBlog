@@ -5,4 +5,4 @@ secret_info.py
 
 # other
 mysite_data.json
-tests.py
+BlogSite_Django/tests.py

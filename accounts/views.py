@@ -4,6 +4,12 @@ from .forms import SignUpForm, LoginForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+
+
+@login_required  # декоратор ограничивает доступ для не авторизированных пользователей
+def profile(request):
+    return render(request, 'registration/profile.html')
 
 
 class SignUpView(generic.CreateView):
