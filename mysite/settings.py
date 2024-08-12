@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from secret_info import EMAIL_HOST_USER_, EMAIL_HOST_PASSWORD_
+from secret_info import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.postgres',
     'accounts.apps.AccountsConfig',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -154,7 +157,29 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 LOGIN_REDIRECT_URL = '/'
 # Redirect на корневую страницу пользователя после выхода из учетной записи
 # LOGOUT_REDIRECT_URL = "/"
+# Переброс не авторизированного пользователя на авторизацию при попытке войти в профиль
+LOGIN_URL = '/accounts/login/'
 
 # Время сохранения куки
 day = 30
 SESSION_COOKIE_AGE = 60 * 60 * 24 * day
+
+# Для медиа-файлов
+MEDIA_ROOT = BASE_DIR/'media'   # полный путь к каталогу, в котором хранятся загруженные файлы.
+MEDIA_URL = '/media/'           # базовый URL-адрес для обслуживания медиафайлов
+
+# Для OAuth авторизации
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',    # базовая серверная часть аутентификации
+)
+
+# OAuth 2.0. для GitHub
+SOCIAL_AUTH_GITHUB_KEY = SOCIAL_AUTH_GITHUB_KEY_
+SOCIAL_AUTH_GITHUB_SECRET = SOCIAL_AUTH_GITHUB_SECRET_
+
+# OAuth 2.0. для Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SOCIAL_AUTH_GOOGLE_OAUTH2_KEY_
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET_
