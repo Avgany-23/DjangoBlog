@@ -153,4 +153,8 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 # Redirect на корневую страницу пользователя после авторизации на сайте
 LOGIN_REDIRECT_URL = '/'
 # Redirect на корневую страницу пользователя после выхода из учетной записи
-LOGOUT_REDIRECT_URL = "/"
+# LOGOUT_REDIRECT_URL = "/"
+
+# Время сохранения куки
+day = 30
+SESSION_COOKIE_AGE = 60 * 60 * 24 * day
