@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from secret_info import *
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -49,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'accounts.apps.AccountsConfig',
     'social_django',
+    'django_bootstrap5'
 ]
 
 MIDDLEWARE = [

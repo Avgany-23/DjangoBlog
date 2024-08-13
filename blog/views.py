@@ -93,7 +93,7 @@ def post_list(request, tag_slug: str | None = None) -> render:
         post_list = post_list.filter(tags__in=[tag])
 
     # Постраничная разбивка с 3 постами на страницу
-    paginator = Paginator(post_list, 4)
+    paginator = Paginator(post_list, 3)
     page_number = request.GET.get('page')
     try:
         posts = paginator.page(page_number)

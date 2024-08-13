@@ -2,7 +2,6 @@ body {
     margin: 0;
     padding: 0;
     font-family: helvetica, sans-serif;
-    background: linear-gradient(to right, rgb(221, 221, 223), transparent);
 }
 
 a {
@@ -10,13 +9,9 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    color: #1f6e95;
-}
-
 h1 {
     font-weight: normal;
-    border-bottom: 1.5px solid #706565;
+    border-bottom: 1px solid #bbb;
     padding: 0 0 10px 0;
 }
 
@@ -35,13 +30,12 @@ h2 {
     float: right;
     width: 30%;
     padding: 10px;
-    background: #c3bdbd;
-    border-radius: 3px;
+    background: #efefef;
     height: 100%;
 }
 
 p.date {
-    color: #755d5d;
+    color: #ccc;
     font-family: georgia, serif;
     font-size: 12px;
     font-style: italic;
@@ -51,25 +45,18 @@ p.date {
 .pagination {
     margin: 40px 0;
     font-weight: bold;
-    border: 1px solid black; /* Граница строки */
-    text-align:center;
-    width: 180px;
-    line-height: 30px; /* Высоту строки */
 }
 
 /* forms */
+
+
 input[type=submit] {
     font-weight: bold;
-    background: #032332;
+    background: #00abff;
     color: #fff;
     padding: 10px 20px;
     font-size: 14px;
     text-transform: uppercase;
-}
-
-input[type=submit]:hover {
-    color: #cf2e2e;
-    font-weight: 500;
 }
 
 .errorlist {
@@ -82,25 +69,14 @@ input[type=submit]:hover {
 /* comments */
 .comment {
     padding: 10px;
-    border-radius: 5px;
 }
 
-.comment:nth-child(2n) {
-    background: #d4cfcf;
-}
-.comment:nth-child(2n + 1) {
-    background: #cec7c7;
+.comment:nth-child(even) {
+    background: #efefef;
 }
 
 .comment .info {
-    font-weight: 800;
-    font-size: 10px;
+    font-weight: bold;
+    font-size: 12px;
     color: #666;
-}
-
-/* формы заполнения */
-form>p>label {
-    color: #b04560;
-    vertical-align: top;
-    font-weight: 600;
 }
