@@ -6,44 +6,16 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')  # Назва
 django.setup()  # Текущие настройки Django взяты выше, можно запускать.
 
 from blog.models import Post, User
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
-from django.contrib.postgres.search import TrigramSimilarity
+import requests
 
-# posts = 'Django'
-# search_vector = SearchVector('title', 'body')
-# search_query = SearchQuery(posts)
-#
-# query = 'django'
-# results = Post.published.annotate(
-#     similarity=TrigramSimilarity('title', query),
-# ).filter(similarity__gt=0.1).order_by('-similarity')
-# res = TrigramSimilarity('title', query)
-# print(res)
+headers = {'search': 'django',
+           'ordering': '-pk'}
+url = 'http://127.0.0.1:8000/api/'
 
-# print(search_query)
-# for i in posts:
-#     # print(i.id)
-#     print(i.tags.values_list('id', flat=True))
-
-
-
-
-
-
-
-
-# from django.contrib.auth.models import User
-
-
-# user = User.objects.create_user(username='user_two',
-#                                  email='user_one1@google.com',
-#                                  password='user07112')
-# user = User.objects.get(username='user_two')
-# print(user.is_anonymous)
-
-
-
-
+response = requests.get(url, headers=headers)
+print(response.json())
+for i in response.json():
+    print(i['id'])
 
 
 

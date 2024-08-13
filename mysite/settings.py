@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j9!)ttipi7w)2jvn+jyf34+qw-78&yil)ap(-w*o3hg_ble=1!'
+SECRET_KEY = str(os.getenv('SECRET_KEY_'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,21 +35,32 @@ ALLOWED_HOSTS = []
 SITE_ID = 1
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.admin',                 # Приложение для админ-панели
+    'django.contrib.auth',                  # Приложение для авторизации
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'blog.apps.BlogConfig',
-    'taggit',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
-    'django.contrib.postgres',
-    'accounts.apps.AccountsConfig',
-    'social_django',
-    'django_bootstrap5'
+    'django.contrib.messages',              # Приложение для сообщений (вставляются в HTML через messages)
+    'django.contrib.staticfiles',           # Приложение для статичных файлов (CSS, медиа и т.д.)
+    'blog.apps.BlogConfig',                 # Приложение блога (постов)
+    'taggit',                               # Приложение для тегов
+    'django.contrib.sites',                 # Приложение для карты маршрутов (для XML поиска)
+    'django.contrib.sitemaps',              # Приложение для карты маршрутов (для XML поиска)
+    'django.contrib.postgres',              # Приложение для подключения PostgresSQL
+    'accounts.apps.AccountsConfig',         # Приложение для регистрации, авторизации и т.д.
+    'social_django',                        # Приложение для OAuth 2.0. авторизации
+    'django_bootstrap5',                    # Приложение для BootStrap фреймворка в CSS
+    'rest_framework',                       # Фреймворк DRF
+    'blog_api.apps.BlogApiConfig',          # Приложение для своих апи (Django DRF)
+    'django_filters',                       # Фильтры для Django DRF
 ]
+
+# Для DRF
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
