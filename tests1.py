@@ -8,13 +8,12 @@ django.setup()  # Текущие настройки Django взяты выше, 
 from blog.models import Post, User
 import requests
 
-headers = {'search': 'django',
-           'ordering': '-pk'}
-url = 'http://127.0.0.1:8000/api/'
+headers = {'Authorization': 'Token 93812749b34711bc5943ba2a14516e49f260bd99'}
+url = 'http://127.0.0.1:8000/api'
 
 response = requests.get(url, headers=headers)
 print(response.json())
-for i in response.json():
+for i in response.json()['results']:
     print(i['id'])
 
 

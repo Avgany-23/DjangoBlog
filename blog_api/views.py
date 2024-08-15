@@ -2,8 +2,16 @@ from rest_framework import generics, filters
 from blog.models import Post
 from .serializers import PostSerializer
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.pagination import LimitOffsetPagination
+from .permissions import IsAuthorOrReadOnly
+
+
+class StandardResultsSetPagination(LimitOffsetPagination):
+    default_limit = 4
+
 
 class PostList(generics.ListCreateAPIView):
+    permission_classes = (IsAuthorOrReadOnly,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -11,16 +19,11 @@ class PostList(generics.ListCreateAPIView):
     search_fields = ['body', 'author__username']
     ordering_fields = ['pk']
     ordering = ['pk']
+    pagination_class = StandardResultsSetPagination
 
-
-
-# class PostList(generics.ListCreateAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-#     filter_backends = [DjangoFilterBackend]
-#     filterset_fields = ['author', 'title']
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthorOrReadOnly,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -30,6 +33,5 @@ class UserPostList(generics.ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        print(self.kwargs)
         user = self.kwargs['id']
         return Post.objects.filter(author=user)

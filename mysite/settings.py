@@ -52,15 +52,36 @@ INSTALLED_APPS = [
     'rest_framework',                       # Фреймворк DRF
     'blog_api.apps.BlogApiConfig',          # Приложение для своих апи (Django DRF)
     'django_filters',                       # Фильтры для Django DRF
+    'rest_framework.authtoken',             # Приложение для DRF токена
+    'drf_spectacular',                      # Приложение для документации и схем API
+
 ]
 
 # Для DRF
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
     ],
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],   # Для фильтров
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',      # Для пагинации
+    'PAGE_SIZE': 3,                                                            # Кол-во найденных записей на странице
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',  # можно и без этого
+        "rest_framework.authentication.TokenAuthentication",    # Для токена DRF
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',   # Класс схемы документации
 }
+
+# Метаданные для документации
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Blog API Project",
+    "DESCRIPTION": "A sample blog to learn about DRF",
+    "VERSION": "1.0.0",
+    # OTHER SETTINGS
+}
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
